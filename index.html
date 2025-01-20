@@ -21,8 +21,14 @@
                     <div id="time">60</div>
                 </div>
             </div>
-            <button id="startBtn" class="btn">Start Game</button>
-            <button id="shootBtn" class="btn" disabled>Shoot!</button>
+            <div class="controls">
+                <button id="startBtn" class="btn">Start Game</button>
+                <button id="shootBtn" class="btn" disabled>Manual Shoot</button>
+                <div class="sensor-status">
+                    <span id="sensorIndicator" class="sensor-indicator"></span>
+                    TTL Sensor
+                </div>
+            </div>
         </div>
         <div id="gameOver" class="game-over hidden">
             <h2>Game Over!</h2>

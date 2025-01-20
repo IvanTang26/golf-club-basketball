@@ -7,6 +7,7 @@ const timeDisplay = document.getElementById('time');
 const countdownDisplay = document.getElementById('countdown');
 const gameOverDisplay = document.getElementById('gameOver');
 const finalScoreDisplay = document.getElementById('finalScore');
+const sensorIndicator = document.getElementById('sensorIndicator');
 
 // Get audio elements
 const countdownSound = document.getElementById('countdownSound');
@@ -18,10 +19,37 @@ let score = 0;
 let timeLeft = 60;
 let gameInterval;
 let isGameRunning = false;
+let sensorActive = false;
+let lastSensorTriggerTime = 0;
 
-// Probability of scoring (70% chance)
+// Constants
 const SCORE_PROBABILITY = 0.7;
 const POINTS_PER_BASKET = 2;
+const SENSOR_COOLDOWN = 1000; // 1 second cooldown between sensor triggers
+const TTL_HIGH = 1;
+const TTL_LOW = 0;
+
+// Simulate TTL sensor input
+function simulateTTLSensor() {
+    if (!isGameRunning) return;
+    
+    const now = Date.now();
+    if (now - lastSensorTriggerTime < SENSOR_COOLDOWN) return;
+    
+    // Simulate sensor detection (TTL HIGH)
+    sensorActive = true;
+    sensorIndicator.classList.add('active');
+    lastSensorTriggerTime = now;
+    
+    // Process the score
+    processScore();
+    
+    // Simulate sensor reset (TTL LOW) after 100ms
+    setTimeout(() => {
+        sensorActive = false;
+        sensorIndicator.classList.remove('active');
+    }, 100);
+}
 
 // Start game function
 function startGame() {
@@ -33,6 +61,7 @@ function startGame() {
     scoreDisplay.textContent = score;
     timeDisplay.textContent = timeLeft;
     gameOverDisplay.classList.add('hidden');
+    sensorIndicator.classList.remove('active');
     
     // Start countdown
     startCountdown();
@@ -78,8 +107,8 @@ function startGameplay() {
     }, 1000);
 }
 
-// Shoot function
-function shoot() {
+// Process score function (used by both manual and TTL input)
+function processScore() {
     if (!isGameRunning) return;
     
     if (Math.random() < SCORE_PROBABILITY) {
@@ -96,12 +125,19 @@ function shoot() {
     }
 }
 
+// Manual shoot function
+function shoot() {
+    if (!isGameRunning) return;
+    processScore();
+}
+
 // End game function
 function endGame() {
     isGameRunning = false;
     clearInterval(gameInterval);
     shootBtn.disabled = true;
     startBtn.disabled = false;
+    sensorIndicator.classList.remove('active');
     
     gameOverSound.play();
     
@@ -120,7 +156,7 @@ document.addEventListener('keydown', (e) => {
         if (!isGameRunning) {
             startGame();
         } else {
-            shoot();
+            simulateTTLSensor(); // Use space bar to simulate sensor input
         }
     }
 }); 
