@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basketball Scoreboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="countdown" class="countdown">3</div>
+        <div class="scoreboard">
+            <h1>Basketball Scoreboard</h1>
+            <div class="score-display">
+                <div class="score">
+                    <h2>Score</h2>
+                    <div id="score">0</div>
+                </div>
+                <div class="timer">
+                    <h2>Time</h2>
+                    <div id="time">60</div>
+                </div>
+            </div>
+            <button id="startBtn" class="btn">Start Game</button>
+            <button id="shootBtn" class="btn" disabled>Shoot!</button>
+        </div>
+        <div id="gameOver" class="game-over hidden">
+            <h2>Game Over!</h2>
+            <p>Final Score: <span id="finalScore">0</span></p>
+            <button id="restartBtn" class="btn">Play Again</button>
+        </div>
+    </div>
+
+    <!-- Audio elements -->
+    <audio id="countdownSound" src="Voice/y2mate.is - Countdown 3 2 1... GO Deep Voice Sound Effect-cSi4U4q-EFs-192k-1709306353.mp3"></audio>
+    <audio id="scoreSound" src="Voice/y2mate.is - Score Sound Effect for editing-2cUbCkL75AM-192k-1709297421.mp3"></audio>
+    <audio id="gameOverSound" src="Voice/y2mate.is -  GAME OVER Deep Voice Sound Effect-xOgv3K58FFM-192k-1709297261.mp3"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html> 
